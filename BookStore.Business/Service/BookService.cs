@@ -1,4 +1,7 @@
-﻿using BookStore.DataAccess.Repository;
+﻿using AutoMapper;
+using BookStore.DataAccess.Repository;
+using BookStore.DTO.Request;
+using BookStore.DTO.Response;
 using BookStore.Entities;
 using System;
 using System.Collections.Generic;
@@ -11,37 +14,51 @@ namespace BookStore.Business.Service
     public class BookService : IBookService
     {
         private readonly IBookRepository _bookRepository;
+        private readonly IMapper _mapper;
 
-        public BookService(IBookRepository bookRepository)
+        public BookService(IBookRepository bookRepository, IMapper mapper)
         {
             _bookRepository = bookRepository;
+            _mapper = mapper;
         }
 
-        public void Add(Book entity)
+        public void Add(AddBookDTO entity)
         {
-            _bookRepository.Add(entity);
+
+            
+            var result = _mapper.Map<Book>(entity);
+            _bookRepository.Add(result);
         }
 
-        public void Delete(Book entity)
+        public void Delete(int id)
         {
-            _bookRepository.Delete(entity);
+            var book=_bookRepository.GetById(id);
+            _bookRepository.Delete(book);
         }
 
-        public List<Book> GetAll()
+        public List<GetAllBookDTO> GetAll()
         {
             var books=_bookRepository.GetAll();
-            return books;
+           var result=  _mapper.Map<List<GetAllBookDTO>>(books);
+            return result;
         }
 
-        public Book GetById(int id)
+        public GetByIdBookDTO GetById(int id)
         {
             var book = _bookRepository.GetById(id);
-            return book;
+            var result = _mapper.Map<GetByIdBookDTO>(book);
+            return result;
         }
 
-        public void Update(Book entity)
+        public bool isExist(int id)
         {
-            _bookRepository.Update(entity);
+        return _bookRepository.isExist(id);
+        }
+
+        public void Update(UpdateBookDTO entity)
+        {
+            var book = _mapper.Map<Book>(entity);
+            _bookRepository.Update(book);
         }
     }
 }

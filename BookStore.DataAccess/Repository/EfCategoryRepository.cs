@@ -9,29 +9,41 @@ namespace BookStore.DataAccess.Repository
 {
     public class EfCategoryRepository : ICategoryRepository
     {
+        private readonly AppDBContext _appDBContext;
+
+        public EfCategoryRepository(AppDBContext appDBContext)
+        {
+            _appDBContext = appDBContext;
+        }
+
         public void Add(Category entity)
         {
-            throw new NotImplementedException();
+            _appDBContext.Add(entity);
+            _appDBContext.SaveChanges();
         }
 
         public void Delete(Category entity)
         {
-            throw new NotImplementedException();
+            _appDBContext.Remove(entity);
+            _appDBContext.SaveChanges();
         }
 
         public List<Category> GetAll()
         {
-            throw new NotImplementedException();
+            var category = _appDBContext.Categories.ToList();
+            return category;
         }
 
         public Category GetById(int id)
         {
-            throw new NotImplementedException();
+            var category = _appDBContext.Categories.FirstOrDefault(x => x.Id == id);
+            return category;
         }
 
         public void Update(Category entity)
         {
-            throw new NotImplementedException();
+           _appDBContext.Update(entity);
+            _appDBContext.SaveChanges();
         }
     }
 }

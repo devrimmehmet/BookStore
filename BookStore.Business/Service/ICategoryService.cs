@@ -1,4 +1,6 @@
-﻿using BookStore.Entities;
+﻿using BookStore.DTO.Request;
+using BookStore.DTO.Response;
+using BookStore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +11,10 @@ namespace BookStore.Business.Service
 {
     public interface ICategoryService
     {
-        void Add(Category entity);
-        void Update(Category entity);
-        void Delete(Category entity);
-        Category GetById(int id);
-        List<Category> GetAll();
+        void Add(AddCategoryDTO entity);
+        void Update(UpdateCategoryDTO entity);
+        void Delete(int id);
+        GetByIdCategoryDTO GetById(int id);
+        List<GetAllCategoryDTO> GetAll();
     }
 }

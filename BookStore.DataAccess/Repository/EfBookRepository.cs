@@ -41,6 +41,11 @@ namespace BookStore.DataAccess.Repository
 
         }
 
+        public bool isExist(int id)
+        {
+            return _appDBContext.Books.Any(x => x.Id == id);
+        }
+
         public void Update(Book entity)
         {
             _appDBContext.Update(entity);

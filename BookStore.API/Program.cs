@@ -1,7 +1,9 @@
+using BookStore.Business.Mapping;
 using BookStore.Business.Service;
 using BookStore.DataAccess;
 using BookStore.DataAccess.Repository;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,6 +23,8 @@ builder.Services.AddScoped<ICategoryRepository, EfCategoryRepository>();
 
 
 builder.Services.AddDbContext<AppDBContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DbBookStore")));
+
+builder.Services.AddAutoMapper(typeof(MapProfile));
 
 var app = builder.Build();
 

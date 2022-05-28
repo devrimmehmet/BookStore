@@ -1,4 +1,5 @@
 ﻿using BookStore.Business.Service;
+using BookStore.DTO.Request;
 using BookStore.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -28,21 +29,22 @@ namespace BookStore.API.Controllers
             var categories = _categoryService.GetAll();
             return Ok(categories);
         }
-        [HttpPut("{id}")]
-        public IActionResult Update(Category category, int id)
+        [HttpPut]
+        public IActionResult Update(UpdateCategoryDTO category)
         {
             _categoryService.Update(category);
             return Ok();
         }
         [HttpPost]
-        public IActionResult Add(Category category)
+        public IActionResult Add(AddCategoryDTO category)
         {
             _categoryService.Add(category);
-            return Ok();
+            return Ok("Kategori Ekleme Başarılı");
         }
         [HttpDelete]
         public IActionResult Delete(int id)
         {
+            _categoryService.Delete(id);
             return Ok();
         }
     }

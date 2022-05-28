@@ -1,4 +1,6 @@
-﻿using BookStore.Entities;
+﻿using BookStore.DTO.Request;
+using BookStore.DTO.Response;
+using BookStore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +11,12 @@ namespace BookStore.Business.Service
 {
     public interface IBookService
     {
-        void Add(Book entity);
-        void Update(Book entity);
-        void Delete(Book entity);
-        Book GetById(int id);
-        List<Book> GetAll();
+        void Add(AddBookDTO entity);
+        void Update(UpdateBookDTO entity);
+        void Delete(int id);
+        GetByIdBookDTO GetById(int id);
+        List<GetAllBookDTO> GetAll();
+
+        bool isExist (int id);
     }
 }

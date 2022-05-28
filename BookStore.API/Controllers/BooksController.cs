@@ -1,4 +1,6 @@
-﻿using BookStore.Business.Service;
+﻿using BookStore.API.Filters;
+using BookStore.Business.Service;
+using BookStore.DTO.Request;
 using BookStore.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -17,10 +19,12 @@ namespace BookStore.API.Controllers
         }
 
         [HttpGet("{id}")]
+        [IsExists]
         public IActionResult GetById(int id)
         {
             var book = _bookService.GetById(id);
             return Ok(book);
+            
 
         }
         [HttpGet]
@@ -31,21 +35,22 @@ namespace BookStore.API.Controllers
 
         }
         [HttpPost]
-        public IActionResult Add(Book book)
+        public IActionResult Add(AddBookDTO book)
         {
             _bookService.Add(book);
             return Ok("Ekleme Başarılı");
         }
-        [HttpPut("{id}")]
-        public IActionResult Update(Book book, int id)
+        [HttpPut]
+        public IActionResult Update(UpdateBookDTO book)
         {
             _bookService.Update(book);
             return Ok("Güncelleme Başarılı");
         }
         [HttpDelete]
+        [IsExists]
         public IActionResult Delete(int id)
         {
-           
+           _bookService.Delete(id);
             return Ok("Silme Başarılı");
         }
 

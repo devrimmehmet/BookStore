@@ -1,4 +1,8 @@
-﻿using BookStore.Entities;
+﻿using AutoMapper;
+using BookStore.DataAccess.Repository;
+using BookStore.DTO.Request;
+using BookStore.DTO.Response;
+using BookStore.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,29 +13,46 @@ namespace BookStore.Business.Service
 {
     public class CategoryService : ICategoryService
     {
-        public void Add(Category entity)
+        private readonly ICategoryRepository _categoryRepository;
+        private readonly IMapper _mapper;
+
+        public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _categoryRepository = categoryRepository;
+            _mapper = mapper;
         }
 
-        public void Delete(Category entity)
+        public void Add(AddCategoryDTO entity)
         {
-            throw new NotImplementedException();
+            var cagetory = _mapper.Map<Category>(entity);
+            _categoryRepository.Add(cagetory);
         }
 
-        public List<Category> GetAll()
+        public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var category = _categoryRepository.GetById(id);
+            _categoryRepository.Delete(category);
         }
 
-        public Category GetById(int id)
+        public void Update(UpdateCategoryDTO entity)
         {
-            throw new NotImplementedException();
+            var result = _mapper.Map<Category>(entity);
+            
+            _categoryRepository.Update(result);
         }
 
-        public void Update(Category entity)
+       public List<GetAllCategoryDTO> GetAll()
         {
-            throw new NotImplementedException();
+            var category = _categoryRepository.GetAll();
+            var result = _mapper.Map<List<GetAllCategoryDTO>>(category);
+            return result;
+        }
+
+       public GetByIdCategoryDTO GetById(int id)
+        {
+            var category = _categoryRepository.GetById(id);
+            var result = _mapper.Map<GetByIdCategoryDTO>(category);
+            return result;
         }
     }
 }
